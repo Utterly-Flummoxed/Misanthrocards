@@ -20,7 +20,10 @@ const backButton = document.getElementById("backButton");
 
 backButton.style.display = "none"; // Hide initially
 
-function drawBlackCard() {
+const drawBlackCardButton = document.getElementById("drawBlackCard");
+const drawWhiteCardsButton = document.getElementById("drawWhiteCards");
+
+drawBlackCardButton.addEventListener("click", () => {
   cardDisplay.innerHTML = "";
   const randomBlackCard = blackCards[Math.floor(Math.random() * blackCards.length)];
   const blackCardElement = document.createElement("div");
@@ -28,10 +31,25 @@ function drawBlackCard() {
   blackCardElement.innerText = randomBlackCard;
   cardDisplay.appendChild(blackCardElement);
   backButton.style.display = "block";
-}
+});
 
-function drawWhiteCards() {
+drawWhiteCardsButton.addEventListener("click", () => {
   cardDisplay.innerHTML = "";
   const whiteCardContainer = document.createElement("div");
   whiteCardContainer.id = "whiteCards";
   for (let i = 0; i < 7; i++) {
+    const randomWhiteCard = whiteCards[Math.floor(Math.random() * whiteCards.length)];
+    const whiteCardElement = document.createElement("div");
+    whiteCardElement.classList.add("whiteCard");
+    whiteCardElement.innerText = randomWhiteCard;
+    whiteCardContainer.appendChild(whiteCardElement);
+  }
+  cardDisplay.appendChild(whiteCardContainer);
+  backButton.style.display = "block";
+});
+
+backButton.addEventListener("click", () => {
+  cardDisplay.innerHTML = "";
+  backButton.style.display = "none";
+  menu.style.display = "block";
+});
