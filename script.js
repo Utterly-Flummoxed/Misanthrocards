@@ -1,5 +1,5 @@
 const packUrls = {
-  base: 'https://docs.google.com/spreadsheets/d/.../export?format=csv',  // Replace with actual CSV URL
+  base: 'https://docs.google.com/spreadsheets/d/1lsy7lIwBe-DWOi2PALZPf5DgXHx9MEvKfRw1GaWQkzg/edit?gid=10#gid=10',  // Replace with actual CSV URL
   // Add more packs here
 };
 
