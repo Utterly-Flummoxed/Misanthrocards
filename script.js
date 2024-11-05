@@ -1,7 +1,7 @@
 // URLs for each card pack. This example uses the base pack URL. 
 // Additional packs can be added with their respective URLs in CSV format.
 const packUrls = {
-  base: 'https://docs.google.com/spreadsheets/d/1lsy7lIwBe-DWOi2PALZPf5DgXHx9MEvKfRw1GaWQkzg/export?format=csv&gid=10',  // Replace with actual CSV URL
+  base: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQfXMJhsJ2dICDAJC85vERBUCz7jO7BeP_P4mRPTHEZdzTpvUIiuq3bz53TlRyikjKgwXPyYYmvl52M/pub?gid=10&single=true&output=csv',  // Replace with actual CSV URL
   // Add more packs here as needed.
 };
 
