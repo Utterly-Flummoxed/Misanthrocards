@@ -9,78 +9,81 @@ const packUrls = {
 let selectedPacks = [];
 let cardType = '';
 
-// Function to show the pack selection menu for drawing black or white cards.
-// The 'type' parameter determines if it's black ('Prompt') or white ('Response') cards.
 function showCardMenu(type) {
-  cardType = type; // Set the global cardType variable to the chosen card type.
-  document.getElementById('main-menu').style.display = 'none';  // Hide the main menu.
-  document.getElementById('card-selection-menu').style.display = 'block';  // Show the pack selection menu.
+  cardType = type;
+  document.getElementById('main-menu').style.display = 'none';
+  document.getElementById('card-selection-menu').style.display = 'block';
 }
 
-// Function to return the user to the main menu and reset display elements.
 function backToMenu() {
-  document.getElementById('main-menu').style.display = 'block';  // Show the main menu.
-  document.getElementById('card-selection-menu').style.display = 'none';  // Hide the pack selection menu.
-  document.getElementById('card-display').style.display = 'none';  // Hide the card display area.
-  document.getElementById('card-content').innerHTML = '';  // Clear any previously displayed cards.
+  document.getElementById('main-menu').style.display = 'block';
+  document.getElementById('card-selection-menu').style.display = 'none';
+  document.getElementById('card-display').style.display = 'none';
+  document.getElementById('card-content').innerHTML = '';
 }
 
-// Function triggered when the player confirms their pack selection and wants to draw cards.
 async function drawCard() {
-  // Capture selected packs from the dropdown menu.
   selectedPacks = Array.from(document.getElementById('pack-selection').selectedOptions).map(option => option.value);
-  
-  // Fetch cards of the specified type from the selected packs and display them.
-  const cards = await fetchCards(selectedPacks, cardType);
-  displayCard(cards);
+  try {
+    const cards = await fetchCards(selectedPacks, cardType);
+    displayCard(cards);
+  } catch (error) {
+    console.error("Error fetching or parsing cards:", error);
+    alert("Failed to load cards. Please check the console for more details.");
+  }
 }
 
-// Function to fetch cards of a specified type (black or white) from the selected packs.
-// Uses async/await to handle asynchronous data fetching from CSV URLs.
 async function fetchCards(packs, type) {
-  const cards = [];  // Array to store the fetched cards.
-
-  // Loop through each selected pack URL, fetch its data, and parse it.
+  const cards = [];
   for (let pack of packs) {
-    const response = await fetch(packUrls[pack]);  // Fetch the CSV data for each pack.
-    const text = await response.text();  // Convert the response to text format (CSV).
-    const rows = text.split('\n').slice(1);  // Split into rows and ignore the first row (header).
-
-    // Loop through each row in the CSV, extracting card type and text.
-    for (let row of rows) {
-      const [cardType, cardText] = row.split(',');  // Split row by commas to separate type and text.
+    try {
+      const response = await fetch(packUrls[pack]);
+      const text = await response.text();
       
-      // Add the card to the list if it matches the selected card type.
-      if (cardType === type.charAt(0).toUpperCase() + type.slice(1)) {
-        cards.push(cardText);
+      // Split rows and parse each row
+      const rows = text.split('\n').slice(5);  // Adjusted for header and comments
+      for (let row of rows) {
+        // Split by comma, but handle cases where text contains commas
+        const columns = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+        
+        // Check if row has valid data for type and card text
+        if (columns && columns[0] === type.charAt(0).toUpperCase() + type.slice(1)) {
+          const cardText = columns[1].replace(/"/g, '');  // Remove any extra quotes around the text
+          cards.push(cardText);
+        }
       }
+    } catch (error) {
+      console.error(`Error fetching data for pack: ${pack}`, error);
     }
   }
-  return cards;  // Return the array of cards of the specified type.
+  return cards;
 }
 
-// Function to display randomly selected cards based on card type.
-// For black cards, it displays one card; for white cards, it displays seven.
 function displayCard(cards) {
-  const cardContent = document.getElementById('card-content');  // Get the element to display the card(s).
-  cardContent.innerHTML = '';  // Clear any previously displayed cards.
+  const cardContent = document.getElementById('card-content');
+  cardContent.innerHTML = '';
 
-  // If the player selected "Draw Black Card", show one random black card.
+  if (cards.length === 0) {
+    cardContent.textContent = "No cards available for the selected packs.";
+    return;
+  }
+
   if (cardType === 'black') {
-    const randomBlackCard = cards[Math.floor(Math.random() * cards.length)];  // Pick a random black card.
-    cardContent.textContent = randomBlackCard;  // Display the card text.
+    const randomBlackCard = cards[Math.floor(Math.random() * cards.length)];
+    cardContent.textContent = randomBlackCard;
   } else {
-    // If the player selected "Draw White Cards", show seven random white cards.
     for (let i = 0; i < 7; i++) {
-      const randomWhiteCard = cards[Math.floor(Math.random() * cards.length)];  // Pick a random white card.
-      const cardElement = document.createElement('div');  // Create a div element for each white card.
-      cardElement.className = 'white-card';  // Add a class to style the white cards.
-      cardElement.textContent = randomWhiteCard;  // Set the text of the white card.
-      cardContent.appendChild(cardElement);  // Append the white card to the card content area.
+      const randomWhiteCard = cards[Math.floor(Math.random() * cards.length)];
+      const cardElement = document.createElement('div');
+      cardElement.className = 'white-card';
+      cardElement.textContent = randomWhiteCard;
+      cardContent.appendChild(cardElement);
     }
   }
-  
-  // Hide the selection menu and show the card display area.
+
+  document.getElementById('card-selection-menu').style.display = 'none';
+  document.getElementById('card-display').style.display = 'block';
+}
   document.getElementById('card-selection-menu').style.display = 'none';
   document.getElementById('card-display').style.display = 'block';
 }
