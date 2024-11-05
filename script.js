@@ -1,55 +1,61 @@
-const blackCards = [
-  "The last thing I saw on TV was _______",
-  "I wouldn't be surprised if _______ became the next president.",
-  "For my next trick, I will pull _______ out of my hat.",
-  "I got 99 problems, but _______ ain't one.",
-  // Add more black cards here...
-];
+const packUrls = {
+  base: 'https://docs.google.com/spreadsheets/d/.../export?format=csv',  // Replace with actual CSV URL
+  // Add more packs here
+};
 
-const whiteCards = [
-  "Slapping a baby.",
-  "A menstrual cramp that could kill a camel.",
-  "Public speaking without preparation.",
-  "Ghosts with a terrible sense of humor.",
-  // Add more white cards here...
-];
+let selectedPacks = [];
+let cardType = '';
 
-const menu = document.getElementById("menu");
-const cardDisplay = document.getElementById("cardDisplay");
-const backButton = document.getElementById("backButton");
+function showCardMenu(type) {
+  cardType = type;
+  document.getElementById('main-menu').style.display = 'none';
+  document.getElementById('card-selection-menu').style.display = 'block';
+}
 
-backButton.style.display = "none"; // Hide initially
+function backToMenu() {
+  document.getElementById('main-menu').style.display = 'block';
+  document.getElementById('card-selection-menu').style.display = 'none';
+  document.getElementById('card-display').style.display = 'none';
+  document.getElementById('card-content').innerHTML = '';
+}
 
-const drawBlackCardButton = document.getElementById("drawBlackCard");
-const drawWhiteCardsButton = document.getElementById("drawWhiteCards");
+async function drawCard() {
+  selectedPacks = Array.from(document.getElementById('pack-selection').selectedOptions).map(option => option.value);
+  const cards = await fetchCards(selectedPacks, cardType);
+  displayCard(cards);
+}
 
-drawBlackCardButton.addEventListener("click", () => {
-  cardDisplay.innerHTML = "";
-  const randomBlackCard = blackCards[Math.floor(Math.random() * blackCards.length)];
-  const blackCardElement = document.createElement("div");
-  blackCardElement.id = "blackCard";
-  blackCardElement.innerText = randomBlackCard;
-  cardDisplay.appendChild(blackCardElement);
-  backButton.style.display = "block";
-});
-
-drawWhiteCardsButton.addEventListener("click", () => {
-  cardDisplay.innerHTML = "";
-  const whiteCardContainer = document.createElement("div");
-  whiteCardContainer.id = "whiteCards";
-  for (let i = 0; i < 7; i++) {
-    const randomWhiteCard = whiteCards[Math.floor(Math.random() * whiteCards.length)];
-    const whiteCardElement = document.createElement("div");
-    whiteCardElement.classList.add("whiteCard");
-    whiteCardElement.innerText = randomWhiteCard;
-    whiteCardContainer.appendChild(whiteCardElement);
+async function fetchCards(packs, type) {
+  const cards = [];
+  for (let pack of packs) {
+    const response = await fetch(packUrls[pack]);
+    const text = await response.text();
+    const rows = text.split('\n').slice(1);  // Skip header
+    for (let row of rows) {
+      const [cardType, cardText] = row.split(',');
+      if (cardType === type.charAt(0).toUpperCase() + type.slice(1)) {
+        cards.push(cardText);
+      }
+    }
   }
-  cardDisplay.appendChild(whiteCardContainer);
-  backButton.style.display = "block";
-});
+  return cards;
+}
 
-backButton.addEventListener("click", () => {
-  cardDisplay.innerHTML = "";
-  backButton.style.display = "none";
-  menu.style.display = "block";
-});
+function displayCard(cards) {
+  const cardContent = document.getElementById('card-content');
+  cardContent.innerHTML = '';
+  if (cardType === 'black') {
+    const randomBlackCard = cards[Math.floor(Math.random() * cards.length)];
+    cardContent.textContent = randomBlackCard;
+  } else {
+    for (let i = 0; i < 7; i++) {
+      const randomWhiteCard = cards[Math.floor(Math.random() * cards.length)];
+      const cardElement = document.createElement('div');
+      cardElement.className = 'white-card';
+      cardElement.textContent = randomWhiteCard;
+      cardContent.appendChild(cardElement);
+    }
+  }
+  document.getElementById('card-selection-menu').style.display = 'none';
+  document.getElementById('card-display').style.display = 'block';
+}
