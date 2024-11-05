@@ -3,17 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Misanthrocards</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Cards Against Humanity</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Misanthrocards</h1>
-  <div id="menu">
-    <button id="drawBlackCard">Draw Black Card</button>
-    <button id="drawWhiteCards">Draw White Cards (7)</button>
+  <div id="main-menu">
+    <h1>Cards Against Humanity</h1>
+    <button onclick="showCardMenu('black')">Draw Black Card</button>
+    <button onclick="showCardMenu('white')">Draw White Cards</button>
   </div>
-  <div id="cardDisplay"></div>
-  <button id="backButton">Back to Menu</button>
+
+  <div id="card-selection-menu" style="display: none;">
+    <h2>Select Packs</h2>
+    <select id="pack-selection" multiple>
+      <option value="base" selected>Base Pack</option>
+      <!-- Additional options for expansion packs go here -->
+    </select>
+    <button onclick="drawCard()">Generate Cards</button>
+    <button onclick="backToMenu()">Back to Menu</button>
+  </div>
+
+  <div id="card-display" style="display: none;">
+    <div id="card-content"></div>
+    <button onclick="backToMenu()">Back to Menu</button>
+  </div>
 
   <script src="script.js"></script>
 </body>
