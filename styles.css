@@ -1,0 +1,22 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+#card-content {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid black;
+  display: inline-block;
+  font-size: 1.2em;
+}
+
+button {
+  padding: 10px;
+  font-size: 1em;
+  margin: 10px;
+}
+
+#card-selection-menu, #card-display {
+  display: none;
+}
