@@ -1,22 +1,30 @@
 body {
   font-family: Arial, sans-serif;
   text-align: center;
-}
-
-#card-content {
-  margin: 20px;
-  padding: 20px;
-  border: 1px solid black;
-  display: inline-block;
-  font-size: 1.2em;
+  margin: 0;
+  padding: 0;
 }
 
 button {
-  padding: 10px;
-  font-size: 1em;
+  padding: 10px 20px;
+  font-size: 16px;
   margin: 10px;
+  cursor: pointer;
 }
 
-#card-selection-menu, #card-display {
-  display: none;
+#cards-container {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 20px;
+  justify-content: center;
+}
+
+.card {
+  font-size: 24px;
+  font-weight: bold;
+  padding: 20px;
+  border: 1px solid #000;
+  background-color: #fff;
+  min-width: 200px;
 }
