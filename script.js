@@ -51,8 +51,9 @@ function displayCards(cards) {
     const cardElement = document.createElement("div");
     cardElement.classList.add("card");
 
-    // Replace underscores for blanks in Prompt cards
+    // Apply black card styling for prompt cards
     if (selectedType === "Prompt") {
+      cardElement.classList.add("black-card");
       cardElement.innerHTML = card.Text.replace(/_/g, '<span style="text-decoration: underline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>');
     } else {
       cardElement.textContent = card.Text;
