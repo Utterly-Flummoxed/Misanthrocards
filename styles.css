@@ -5,42 +5,27 @@ body {
   padding: 0;
 }
 
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  margin: 10px;
-  cursor: pointer;
-}
-
-#cards-container {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  padding: 20px;
-  justify-content: center;
-}
-
-.card {
-  font-size: 24px;
+#main-menu button {
+  width: 150px; /* Square shape with equal width and height */
+  height: 150px;
+  font-size: 18px; /* Larger font for main buttons */
   font-weight: bold;
-  padding: 20px;
-  border: 1px solid #000;
-  background-color: #fff;
-  min-width: 200px;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  margin: 10px;
+  margin: 20px;
   cursor: pointer;
+  border: 2px solid transparent; /* Initial border style */
+  border-radius: 8px; /* Rounded corners */
+}
+
+#main-menu .draw-black-card {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+#main-menu .draw-white-cards {
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #000; /* Black outline */
 }
 
 #cards-container {
