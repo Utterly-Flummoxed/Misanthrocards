@@ -63,7 +63,7 @@
     Inspired by <a href="https://www.cardsagainsthumanity.com/" target="_blank">Cards Against Humanity</a>,
     Created by <a href="https://linktr.ee/kaywhocreates" target="_blank">Kay</a>
   </footer>
-
+  
   <script>
     // JSON data embedded directly in JavaScript
     const cardsData = [
@@ -23398,7 +23398,7 @@
         "Text": "Wearing my mother's bra.",
         "Pack": "Family Edition"
     }
-]
+];
 
     // Populate deck selection dropdown with unique packs
     function populatePackSelection() {
@@ -23467,8 +23467,8 @@
       document.getElementById("main-menu").style.display = "block";
     }
 
-    // Initialize app
-    populatePackSelection();
+    // Initialize app and populate dropdown when page loads
+    document.addEventListener("DOMContentLoaded", populatePackSelection);
   </script>
 </body>
 </html>
