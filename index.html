@@ -3,16 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <title>Cards Against Humanity Game</title>
+  
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Main Menu -->
 <div id="main-menu">
   <h1>Cards Against Humanity</h1>
+  
       <!-- The Buttons -->
-  <button class="draw-black-card" onclick="openCardSelection('Prompt')">Draw Black Card</button>
-  <button class="draw-white-cards" onclick="openCardSelection('Response')">Draw White Cards</button>
+  <button class="draw-black-card" onclick="drawBlackCard()">Draw Black Card</button>
+  <button class="draw-white-cards" onclick="drawWhiteCards()">Draw White Cards</button>
+  
     <!-- Deck Selection Dropdown -->
   <label for="pack-selection">Select Decks:</label>
   <select id="pack-selection" multiple>
@@ -37,6 +41,7 @@
       <option value="The Everything Pack">The Everything Pack</option>
       <option value="Hot Box Pack">Hot Box Pack</option>
       <!-- Add more packs as needed -->
+      
     </select>
     <button onclick="drawCards()">Draw Cards</button>
     <button onclick="returnToMenu()">Back to Menu</button>
