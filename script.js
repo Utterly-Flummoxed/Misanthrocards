@@ -1,9 +1,10 @@
 let cardsData = [];
 let selectedType = "";
 
+// Load cards from the updated JSON file
 async function loadCards() {
   try {
-    const response = await fetch("cards.json");
+    const response = await fetch("Misanthrocards.json"); // Updated file name
     cardsData = await response.json();
   } catch (error) {
     console.error("Error loading cards:", error);
@@ -49,7 +50,14 @@ function displayCards(cards) {
   cards.forEach(card => {
     const cardElement = document.createElement("div");
     cardElement.classList.add("card");
-    cardElement.textContent = card.Text;
+
+    // Replace underscores for blanks in Prompt cards
+    if (selectedType === "Prompt") {
+      cardElement.innerHTML = card.Text.replace(/_/g, '<span style="text-decoration: underline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>');
+    } else {
+      cardElement.textContent = card.Text;
+    }
+
     cardsContainer.appendChild(cardElement);
   });
 
@@ -62,4 +70,5 @@ function returnToMenu() {
   document.getElementById("main-menu").style.display = "block";
 }
 
+// Initial call to load cards from Misanthrocards.json
 loadCards();
