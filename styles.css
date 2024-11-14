@@ -59,3 +59,18 @@ body {
   background-color: #000;
   color: #fff;
 }
+
+.credit-message {
+  font-size: 14px;
+  color: #666;
+  margin-top: 20px;
+}
+
+.credit-message a {
+  color: #007bff; /* A shade of blue for links */
+  text-decoration: none;
+}
+
+.credit-message a:hover {
+  text-decoration: underline;
+}
