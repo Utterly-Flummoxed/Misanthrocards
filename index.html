@@ -3,29 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cards Against Humanity</title>
+  <title>Cards Against Humanity Game</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div id="main-menu">
     <h1>Cards Against Humanity</h1>
-    <button onclick="showCardMenu('black')">Draw Black Card</button>
-    <button onclick="showCardMenu('white')">Draw White Cards</button>
+    <button onclick="openCardSelection('Prompt')">Draw Black Card</button>
+    <button onclick="openCardSelection('Response')">Draw White Cards</button>
   </div>
 
-  <div id="card-selection-menu" style="display: none;">
+  <div id="card-selection" style="display: none;">
     <h2>Select Packs</h2>
     <select id="pack-selection" multiple>
-      <option value="base" selected>Base Pack</option>
-      <!-- Additional options for expansion packs go here -->
+      <option value="Base Game" selected>Base Game</option>
+      <option value="Expansion Set 1">Expansion Set 1</option>
+      <!-- Add more packs as needed -->
     </select>
-    <button onclick="drawCard()">Generate Cards</button>
-    <button onclick="backToMenu()">Back to Menu</button>
+    <button onclick="drawCards()">Draw Selected Cards</button>
+    <button onclick="returnToMenu()">Back to Menu</button>
   </div>
 
   <div id="card-display" style="display: none;">
-    <div id="card-content"></div>
-    <button onclick="backToMenu()">Back to Menu</button>
+    <h2>Drawn Cards</h2>
+    <div id="cards-container"></div>
+    <button onclick="returnToMenu()">Back to Menu</button>
   </div>
 
   <script src="script.js"></script>
